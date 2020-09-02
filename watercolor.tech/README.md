@@ -1,0 +1,1 @@
+A multiplayer browser drawing game. Made using flask-socketio.

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+{% endblock %}
+
+
+{% block body %}
+
+<!-- Buttons to open Modal -->
+
+<!-- host -->
+<div id="hostModal" class="modal">
+
+    <div class="modal-content">
+        <form method="POST">
+            {{ hostForm.hidden_tag() }}
+            {{ hostForm.name.label }}: {{ hostForm.name() }} {% for error in hostForm.name.errors %}{{ error }}{% endfor %}<br> <br>
+            {{ hostForm.submit() }}
+        </form>
+    </div>
+
+</div>
+
+<!-- join -->
+<div id="joinModal" class="modal">
+    <div class="modal-content">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br> <br>
+            {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br> <br>
+            {{ form.submit() }}
+        </form>
+    </div>
+
+</div>
+
+
+<div id="page-wrapper">
+
+    <!-- Banner -->
+        <section id="banner">
+            <h2>Watercolor . tech</h2>
+            <p>Draw with friends. No mask required.</p>
+            <ul class="actions special">
+                <li><a href="#" id="hostBtn" class="button primary">Host Game</a></li>
+                <li><a href="#" id="joinBtn" class="button">Join Game</a></li>
+            </ul>
+        </section>
+
+    
+    <!-- Footer -->
+        <footer id="footer">
+            <ul class="copyright">
+                <p>Made by Tren Black. Sponsored by .tech domains.</p>
+                <li>&copy; Trenblack. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </footer>
+
+</div>
+<script src="{{ url_for('static', filename='javascript/modal.js') }}"></script>
+{% endblock %}

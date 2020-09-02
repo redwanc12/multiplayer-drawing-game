@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %}
+{% block head %}
+<title>Room {{ room }}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h1>Room Code <span style="color:blue;">{{ room }}</span></h1>
+        </div>
+        <div class="col">
+            <h1>Drawer <span id="drawer" style="color:blue;"></span></h1>
+        </div>
+        <div class="col">
+            <h1>Time left: <span style="color:blue;" id="timeLeft">30</span>s</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div id="statusBox">
+                <label>Players</label>
+                <ol id="userList">
+                    <li>
+                        <span class = statusBoxUsername></span> <br>
+                        <span class = statusBoxPoints></span> 
+                    </li>
+                </ol>
+                <button id="startBtn" onclick="startGuess();">Start Game</button>
+            </div>
+        </div>
+        <div class="col-7" id="canvasDiv">
+            <canvas id="canvas" width="620" height="500"></canvas>
+        </div>
+        <div class="col-3">
+            <div class="chat-container">
+                <div contenteditable id="chat" spellcheck="false"></div>
+                <input id="text" size="80" placeholder="Enter your message here">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px;">
+        <div class="col">
+            <div style="border-radius: 50%; width:30px;height:30px;background:green;"onclick="if(currDrawer == username) socket.emit('updateColor', 'green');"></div>
+        </div>
+        <div class="col">
+            <div style="border-radius: 50%; width:30px;height:30px;background:blue;" onclick="if(currDrawer == username) socket.emit('updateColor', 'blue');"></div>
+        </div>
+        <div class="col">
+            <div style="border-radius: 50%; width:30px;height:30px;background:black;" onclick="if(currDrawer == username) socket.emit('updateColor', 'black');"></div>
+        </div>
+        <div class="col">
+            <div style="border-radius: 50%; width:30px;height:30px;background:red;" onclick="if(currDrawer == username) socket.emit('updateColor', 'red');"></div>
+        </div>
+        <div class="col">
+            <div style="border-radius: 50%; width:30px;height:30px;" onclick="if(currDrawer == username) socket.emit('clearCanvas');">clear</div>
+        </div>
+        <div class="col">
+            <div style="border-radius: 50%; width:30px;height:30px;" onclick="if(currDrawer == username) socket.emit('updateColor', 'white');">erase</div>
+        </div>
+        <div class="col">
+            <div class="slidecontainer">
+                Size
+                <input type="range" min="5" max="30" value="10" class="slider" oninput="if(currDrawer == username) socket.emit('updateBrushSize', this.value)">
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+{% endblock %}
